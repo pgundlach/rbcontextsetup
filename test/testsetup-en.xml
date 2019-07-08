@@ -1,0 +1,829 @@
+<?xml version="1.0" standalone="yes"?>
+
+<!-- versions:
+
+comment  : user interface definitions of ConTeXt
+
+authors  : Hans Hagen, Taco Hoekwater, Patrick Gundlach
+
+versions : 2004.11.17 : initial version
+2006.08.02 : define + resolve
+
+-->
+
+<cd:interface xmlns:cd="http://www.pragma-ade.com/commands" name="context" language="en" version="2006.08.02">
+
+  <cd:define name="align">
+    <cd:constant type="inner"/>
+    <cd:constant type="outer"/>
+    <cd:constant type="left"/>
+    <cd:constant type="right"/>
+    <cd:constant type="flushleft"/>
+    <cd:constant type="flushright"/>
+    <cd:constant type="middle"/>
+    <cd:constant type="center"/>
+    <cd:constant type="normal"/>
+    <cd:constant type="no"/>
+    <cd:constant type="yes"/>
+  </cd:define>
+  
+	<cd:define name="indenting">
+		<cd:constant type="never"/>
+		<cd:constant type="none"/>
+		<cd:constant type="not"/>
+		<cd:constant type="no"/>
+		<cd:constant type="yes"/>
+		<cd:constant type="always"/>
+		<cd:constant type="first"/>
+		<cd:constant type="next"/>
+		<cd:constant type="small"/>
+		<cd:constant type="medium"/>
+		<cd:constant type="big"/>
+		<cd:constant type="normal"/>
+		<cd:constant type="odd"/>
+		<cd:constant type="even"/>
+		<cd:constant type="cd:dimension"/>
+	</cd:define>
+
+	<cd:define name="indentnext">
+		<cd:constant type="yes"/>
+		<cd:constant type="no"/>
+	</cd:define>
+
+	<cd:define name="style">
+		<cd:constant type="normal"/>
+		<cd:constant type="bold"/>
+		<cd:constant type="slanted"/>
+		<cd:constant type="boldslanted"/>
+		<cd:constant type="type"/>
+		<cd:constant type="cap"/>
+		<cd:constant type="small..."/>
+		<cd:constant type="cd:command"/>
+	</cd:define>
+
+	<cd:define name="language">
+		<cd:constant type="nl"/>
+		<cd:constant type="fr"/>
+		<cd:constant type="en"/>
+		<cd:constant type="uk"/>
+		<cd:constant type="de"/>
+		<cd:constant type="es"/>
+		<cd:constant type="cz"/>
+		<cd:constant type=".."/>
+	</cd:define>
+
+	<cd:define name="texts">
+		<cd:constant type="cd:text"/>
+		<cd:constant type="cd:section"/>
+		<cd:constant type="date"/>
+		<cd:constant type="cd:mark"/>
+		<cd:constant type="pagenumber"/>
+	</cd:define>
+  
+  <cd:define name="bodyfont">
+    <cd:constant type="5pt"/>
+    <cd:constant type="..."/>
+    <cd:constant type="12pt"/>
+    <cd:constant type="small"/>
+    <cd:constant type="big"/>
+  </cd:define>
+  
+
+  <cd:command id="cd:42" name="typing" type="environment" generated="yes" file="verb-ini.tex" category="verbatim">
+    <cd:sequence>
+      <cd:variable value="typing"/>
+    </cd:sequence>
+  </cd:command>
+  
+
+	<!-- assignments, bycd:section -->
+  <cd:command id="cd:273" name="setupnumbering" file="core-num.tex">
+    <cd:sequence>
+      <cd:string value="setupnumbering"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:assignments n="1" list="yes">
+        <cd:parameter name="way">
+          <cd:constant type="bytext"/>
+          <cd:constant type="bycd:section"/>
+        </cd:parameter>
+        <cd:parameter name="state">
+          <cd:constant type="start"/>
+          <cd:constant type="stop"/>
+        </cd:parameter>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  
+	<!-- keywords list -->
+  <cd:command id="cd:6" name="useencoding" file="enco-ini.tex" category="encoding"> <!-- engine="pdftex" -->
+    <cd:sequence>
+      <cd:string value="useencoding"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1" list="yes">
+        <cd:constant type="cd:name"/>
+      </cd:keywords>
+    </cd:arguments>
+  </cd:command>
+  
+	<!-- file -->
+  <cd:command id="cd:228" name="project" type="environment" file="core-job.tex">
+    <cd:sequence>
+      <cd:string value="project"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:file n="1"/>
+    </cd:arguments>
+  </cd:command>
+  
+
+	<!-- variant -->
+  <cd:command id="cd:265" name="placecombinedlist" variant="1" file="core-lst.tex">
+    <cd:sequence>
+      <cd:string value="placecombinedlist"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1">
+        <cd:constant type="cd:name"/>
+      </cd:keywords>
+      <cd:assignments n="2" optional="yes" list="yes">
+        <cd:inherit ref="cd:270" name="setupcombinedlist" n="2"/>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  <cd:command id="cd:271" name="placecombinedlist" variant="2" generated="yes" file="core-lst.tex">
+    <cd:sequence>
+      <cd:string value="place"/>
+      <cd:variable value="combinedlist"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1">
+        <cd:constant type="cd:name"/>
+      </cd:keywords>
+      <cd:assignments n="2" optional="yes" list="yes">
+        <cd:inherit ref="cd:270" name="setupcombinedlist" n="2"/>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  <cd:command id="cd:270" name="setupcombinedlist" file="core-lst.tex">
+    <cd:sequence>
+      <cd:string value="setupcombinedlist"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1">
+        <cd:constant type="cd:name"/>
+      </cd:keywords>
+      <cd:assignments n="2" list="yes">
+        <cd:parameter name="level">
+          <cd:constant type="1"/>
+          <cd:constant type="2"/>
+          <cd:constant type="3"/>
+          <cd:constant type="4"/>
+          <cd:constant type="cd:section"/>
+          <cd:constant type="current"/>
+        </cd:parameter>
+        <cd:inherit ref="cd:267" name="setuplist" n="2"/>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  <cd:command id="cd:267" name="setuplist" file="core-lst.tex">
+    <cd:sequence>
+      <cd:string value="setuplist"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1" list="yes">
+        <cd:constant type="cd:name"/>
+      </cd:keywords>
+      <cd:assignments n="2" list="yes">
+        <cd:parameter name="state">
+          <cd:constant type="start"/>
+          <cd:constant type="stop"/>
+        </cd:parameter>
+        <cd:parameter name="alternative">
+          <cd:constant type="a"/>
+          <cd:constant type="b"/>
+          <cd:constant type="c"/>
+          <cd:constant type="..."/>
+          <cd:constant type="none"/>
+          <cd:constant type="command"/>
+        </cd:parameter>
+        <cd:parameter name="coupling">
+          <cd:constant type="on"/>
+          <cd:constant type="off"/>
+        </cd:parameter>
+        <cd:parameter name="criterium">
+          <cd:constant type="cd:section"/>
+          <cd:constant type="local"/>
+          <cd:constant type="previous"/>
+          <cd:constant type="current"/>
+          <cd:constant type="all"/>
+        </cd:parameter>
+        <cd:parameter name="pageboundaries">
+          <cd:constant type="cd:list"/>
+        </cd:parameter>
+        <cd:parameter name="style">
+          <cd:resolve name="style"/>
+        </cd:parameter>
+        <cd:parameter name="numberstyle">
+          <cd:resolve name="style"/>
+        </cd:parameter>
+        <cd:parameter name="textstyle">
+          <cd:resolve name="style"/>
+        </cd:parameter>
+        <cd:parameter name="pagestyle">
+          <cd:resolve name="style"/>
+        </cd:parameter>
+        <cd:parameter name="color">
+          <cd:constant type="cd:name"/>
+        </cd:parameter>
+        <cd:parameter name="command">
+          <cd:constant type="cd:threearguments"/>
+        </cd:parameter>
+        <cd:parameter name="numbercommand">
+          <cd:constant type="cd:oneargument"/>
+        </cd:parameter>
+        <cd:parameter name="textcommand">
+          <cd:constant type="cd:oneargument"/>
+        </cd:parameter>
+        <cd:parameter name="pagecommand">
+          <cd:constant type="cd:oneargument"/>
+        </cd:parameter>
+        <cd:parameter name="interaction">
+          <cd:constant type="cd:sectionnumber"/>
+          <cd:constant type="cd:text"/>
+          <cd:constant type="pagenumber"/>
+          <cd:constant type="all"/>
+        </cd:parameter>
+        <cd:parameter name="before">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="after">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="inbetween">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="left">
+          <cd:constant type="cd:text"/>
+        </cd:parameter>
+        <cd:parameter name="right">
+          <cd:constant type="cd:text"/>
+        </cd:parameter>
+        <cd:parameter name="label">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+        </cd:parameter>
+        <cd:parameter name="prefix">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+          <cd:constant type="none"/>
+        </cd:parameter>
+        <cd:parameter name="pagenumber">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+        </cd:parameter>
+        <cd:parameter name="headnumber">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+        </cd:parameter>
+        <cd:parameter name="cd:sectionnumber">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+        </cd:parameter>
+        <cd:parameter name="aligntitle">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+        </cd:parameter>
+        <cd:parameter name="margin">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="width">
+          <cd:constant type="cd:dimension"/>
+          <cd:constant type="fit"/>
+        </cd:parameter>
+        <cd:parameter name="height">
+          <cd:constant type="cd:dimension"/>
+          <cd:constant type="fit"/>
+          <cd:constant type="broad"/>
+        </cd:parameter>
+        <cd:parameter name="depth">
+          <cd:constant type="cd:dimension"/>
+          <cd:constant type="fit"/>
+          <cd:constant type="broad"/>
+        </cd:parameter>
+        <cd:parameter name="distance">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="separator">
+          <cd:constant type="cd:text"/>
+        </cd:parameter>
+        <cd:parameter name="stopper">
+          <cd:constant type="cd:text"/>
+        </cd:parameter>
+        <cd:parameter name="symbol">
+          <cd:constant type="none"/>
+          <cd:constant type="1"/>
+          <cd:constant type="2"/>
+          <cd:constant type="3"/>
+          <cd:constant type="..."/>
+        </cd:parameter>
+        <cd:parameter name="expansion">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+          <cd:constant type="command"/>
+        </cd:parameter>
+        <cd:parameter name="maxwidth">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:inherit ref="cd:99" name="setupframed" n="2"/>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  
+  
+  <cd:command id="cd:272" name="completecombinedlist" generated="yes" file="core-lst.tex">
+    <cd:sequence>
+      <cd:string value="complete"/>
+      <cd:variable value="combinedlist"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1">
+        <cd:constant type="cd:name"/>
+      </cd:keywords>
+      <cd:assignments n="2" optional="yes" list="yes">
+        <cd:inherit ref="cd:270" name="setupcombinedlist" n="2"/>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  
+
+
+	<!-- csname -->
+  <cd:command id="cd:237" name="define" file="syst-ext.tex">
+    <cd:sequence>
+      <cd:string value="define"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1" optional="yes">
+        <cd:constant type="cd:number"/>
+      </cd:keywords>
+      <cd:csname n="2"/>
+      <cd:content n="3"/>
+    </cd:arguments>
+  </cd:command>
+  
+
+	<!-- position -->
+  <cd:command id="cd:370" name="position" file="page-lyr.tex">
+    <cd:sequence>
+      <cd:string value="position"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:position n="1" list="yes"/>
+      <cd:content n="2"/>
+    </cd:arguments>
+  </cd:command>
+  
+	<!-- index -->
+  <cd:command id="cd:323" name="register" generated="yes" file="core-reg.tex">
+    <cd:sequence>
+      <cd:variable value="register"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1" optional="yes">
+        <cd:constant type="cd:text"/>
+      </cd:keywords>
+      <cd:index n="2" list="yes"/>
+    </cd:arguments>
+  </cd:command>
+  
+	<!-- displaymath -->
+  <cd:command id="cd:391" name="placeformula" file="core-mat.tex">
+    <cd:sequence>
+      <cd:string value="placeformula"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:reference n="1" optional="yes" list="yes"/>
+      <cd:content n="2" optional="yes"/>
+      <cd:displaymath n="3"/>
+    </cd:arguments>
+  </cd:command>
+  
+
+	<!-- tex -->
+
+  <cd:command id="cd:435" name="legend" type="environment">
+    <cd:sequence>
+      <cd:string value="legend"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1" optional="yes">
+        <cd:constant type="two"/>
+      </cd:keywords>
+      <cd:tex n="2" command="leg"/>
+      <cd:nothing n="3"/>
+      <cd:nothing n="4" separator="backslash"/>
+      <cd:nothing n="5" separator="backslash"/>
+      <cd:tex n="6" separator="backslash" command="leg"/>
+    </cd:arguments>
+  </cd:command>
+  
+
+	<!-- nothing -->
+
+  <cd:command id="cd:117" name="fillinline" file="core-rul.tex">
+    <cd:sequence>
+      <cd:string value="fillinline"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:assignments n="1" optional="yes" list="yes">
+        <cd:inherit ref="cd:118" name="setupfillinlines" n="1"/>
+      </cd:assignments>
+      <cd:nothing n="2"/>
+    </cd:arguments>
+  </cd:command>
+  <!-- for the inherit -->
+  <cd:command id="cd:118" name="setupfillinlines" file="core-rul.tex">
+    <cd:sequence>
+      <cd:string value="setupfillinlines"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:assignments n="1" list="yes">
+        <cd:parameter name="width">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="margin">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="distance">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="before">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="after">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  
+
+
+	<!-- word -->
+  <cd:command id="cd:54" name="underbars" file="core-fnt.tex">
+    <cd:sequence>
+      <cd:string value="underbars"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:word n="1" list="yes"/>
+    </cd:arguments>
+  </cd:command>
+  
+
+	<!-- reference -->
+  <cd:command id="cd:46" name="footnote" file="core-not.tex" category="footnotes">
+    <cd:sequence>
+      <cd:string value="footnote"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:reference n="1" optional="yes"/>
+      <cd:content n="2"/>
+    </cd:arguments>
+  </cd:command>
+
+  <!-- reference, list=yes -->
+  <cd:command id="cd:312" name="item" file="core-itm.tex">
+    <cd:sequence>
+      <cd:string value="item"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:reference n="1" optional="yes" list="yes"/>
+    </cd:arguments>
+  </cd:command>
+  
+	<!-- triplet, multiple keywords, -->
+  <cd:command id="cd:29" name="definecolorgroup" file="colo-ini.tex" category="colors">
+    <cd:sequence>
+      <cd:string value="definecolorgroup"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1">
+        <cd:constant type="cd:name"/>
+      </cd:keywords>
+      <cd:keywords n="2" optional="yes">
+        <cd:constant type="rgb" default="yes"/>
+        <cd:constant type="cmyk"/>
+        <cd:constant type="gray"/>
+        <cd:constant type="s"/>
+      </cd:keywords>
+      <cd:triplet n="3" list="yes"/>
+    </cd:arguments>
+  </cd:command>
+  
+
+	<!-- file= in cd:command -->
+
+  <cd:command id="cd:511" name="setupstrut" file="core-spa.tex">
+    <cd:sequence>
+      <cd:string value="setupstrut"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1">
+        <cd:constant type="yes" default="yes"/>
+        <cd:constant type="no"/>
+        <cd:constant type="cap"/>
+        <cd:constant type="cd:text"/>
+      </cd:keywords>
+    </cd:arguments>
+  </cd:command>
+  
+	<!-- inherit -->
+
+
+	<!-- inherit after parameters -->
+  <cd:command id="cd:108" name="setupframedtexts" file="core-rul.tex">
+    <cd:sequence>
+      <cd:string value="setupframedtexts"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1" optional="yes">
+        <cd:constant type="cd:name"/>
+      </cd:keywords>
+      <cd:assignments n="2" list="yes">
+        <cd:parameter name="bodyfont">
+          <cd:resolve name="bodyfont"/>
+        </cd:parameter>
+        <cd:parameter name="style">
+          <cd:resolve name="style"/>
+        </cd:parameter>
+        <cd:parameter name="left">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="right">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="before">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="after">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="inner">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="linecorrection">
+          <cd:constant type="on"/>
+          <cd:constant type="off"/>
+        </cd:parameter>
+        <cd:parameter name="depthcorrection">
+          <cd:constant type="on"/>
+          <cd:constant type="off"/>
+        </cd:parameter>
+        <cd:parameter name="margin">
+          <cd:constant type="standard"/>
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+        </cd:parameter>
+        <cd:parameter name="location">
+          <cd:constant type="left"/>
+          <cd:constant type="right"/>
+          <cd:constant type="middle"/>
+          <cd:constant type="none"/>
+        </cd:parameter>
+        <cd:parameter name="indenting">
+          <cd:resolve name="indenting"/>
+        </cd:parameter>
+        <cd:inherit ref="cd:99" name="setupframed" n="2"/>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+
+  <cd:command id="cd:99" name="setupframed" file="core-rul.tex">
+    <cd:sequence>
+      <cd:string value="setupframed"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:keywords n="1" optional="yes">
+        <cd:constant type="cd:name"/> <!-- defines a command with that name -->
+      </cd:keywords>
+      <cd:assignments n="2" list="yes">
+        <cd:parameter name="height">
+          <cd:constant type="fit"/>
+          <cd:constant type="broad"/>
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="width">
+          <cd:constant type="fit"/>
+          <cd:constant type="broad"/>
+          <cd:constant type="fixed"/>
+          <cd:constant type="local"/>
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="autowidth">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+          <cd:constant type="force"/>
+        </cd:parameter>
+        <cd:parameter name="offset">
+          <cd:constant type="none"/>
+          <cd:constant type="overlay"/>
+          <cd:constant type="default"/>
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="location">
+          <cd:constant type="depth"/>
+          <cd:constant type="hanging"/>
+          <cd:constant type="high"/>
+          <cd:constant type="lohi"/>
+          <cd:constant type="low"/>
+          <cd:constant type="top"/>
+          <cd:constant type="middle"/>
+          <cd:constant type="bottom"/>
+          <cd:constant type="keep"/>
+        </cd:parameter>
+        <cd:parameter name="option">
+          <cd:constant type="none"/>
+          <cd:constant type="empty"/>
+        </cd:parameter>
+        <cd:parameter name="strut">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+          <cd:constant type="global"/>
+          <cd:constant type="local"/>
+        </cd:parameter>
+        <cd:parameter name="align">
+          <cd:resolve name="align"/>
+        </cd:parameter>
+        <cd:parameter name="bottom">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="top">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="frame">
+          <cd:constant type="on"/>
+          <cd:constant type="off"/>
+          <cd:constant type="none"/>
+          <cd:constant type="overlay"/>
+        </cd:parameter>
+        <cd:parameter name="topframe">
+          <cd:constant type="on"/>
+          <cd:constant type="off"/>
+        </cd:parameter>
+        <cd:parameter name="bottomframe">
+          <cd:constant type="on"/>
+          <cd:constant type="off"/>
+        </cd:parameter>
+        <cd:parameter name="leftframe">
+          <cd:constant type="on"/>
+          <cd:constant type="off"/>
+        </cd:parameter>
+        <cd:parameter name="rightframe">
+          <cd:constant type="on"/>
+          <cd:constant type="off"/>
+        </cd:parameter>
+        <cd:parameter name="frameoffset">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="framedepth">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="framecorner">
+          <cd:constant type="round"/>
+          <cd:constant type="rectangular"/>
+        </cd:parameter>
+        <cd:parameter name="frameradius">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="framecolor">
+          <cd:constant type="cd:name"/>
+        </cd:parameter>
+        <cd:parameter name="background">
+          <cd:constant type="screen"/>
+          <cd:constant type="color"/>
+          <cd:constant type="none"/>
+          <cd:constant type="foreground"/>
+          <cd:constant type="cd:name"/>
+        </cd:parameter>
+        <cd:parameter name="backgroundscreen">
+          <cd:constant type="cd:number"/>
+        </cd:parameter>
+        <cd:parameter name="backgroundcolor">
+          <cd:constant type="cd:name"/>
+        </cd:parameter>
+        <cd:parameter name="backgroundoffset">
+          <cd:constant type="frame"/>
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="backgrounddepth">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="backgroundcorner">
+          <cd:constant type="round"/>
+          <cd:constant type="rectangular"/>
+        </cd:parameter>
+        <cd:parameter name="backgroundradius">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="depth">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="corner">
+          <cd:constant type="round"/>
+          <cd:constant type="rectangular"/>
+        </cd:parameter>
+        <cd:parameter name="radius">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="empty">
+          <cd:constant type="yes"/>
+          <cd:constant type="no"/>
+        </cd:parameter>
+        <cd:parameter name="foregroundcolor">
+          <cd:constant type="cd:name"/>
+        </cd:parameter>
+        <cd:parameter name="foregroundstyle">
+          <cd:resolve name="style"/>
+        </cd:parameter>
+        <cd:parameter name="rulethickness">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  
+
+	<!-- content -->
+  <cd:command id="cd:156" name="subsection" file="core-sec.tex">
+    <cd:sequence>
+      <cd:string value="subsection"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:reference n="1" optional="yes" list="yes"/>
+      <cd:content n="2"/>
+    </cd:arguments>
+  </cd:command>
+  
+	<!-- content, list=yes -->
+  <cd:command id="cd:406" name="items">
+    <cd:sequence>
+      <cd:string value="items"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:assignments n="1" optional="yes" list="yes">
+        <cd:inherit ref="cd:407" name="setupitems" n="1"/>
+      </cd:assignments>
+      <cd:content n="2" list="yes"/>
+    </cd:arguments>
+  </cd:command>
+  <cd:command id="cd:407" name="setupitems" file="core-mis.tex">
+    <cd:sequence>
+      <cd:string value="setupitems"/>
+    </cd:sequence>
+    <cd:arguments>
+      <cd:assignments n="1" list="yes">
+        <cd:parameter name="location">
+          <cd:constant type="left"/>
+          <cd:constant type="right"/>
+          <cd:constant type="inmargin"/>
+          <cd:constant type="top"/>
+          <cd:constant type="bottom"/>
+        </cd:parameter>
+        <cd:parameter name="symbol">
+          <cd:constant type="1"/>
+          <cd:constant type="2"/>
+          <cd:constant type="..."/>
+          <cd:constant type="n"/>
+          <cd:constant type="a"/>
+          <cd:constant type="..."/>
+          <cd:constant type="cd:text"/>
+          <cd:constant type="none"/>
+        </cd:parameter>
+        <cd:parameter name="width">
+          <cd:constant type="cd:dimension"/>
+        </cd:parameter>
+        <cd:parameter name="n">
+          <cd:constant type="cd:number"/>
+          <cd:constant type="unknown"/>
+        </cd:parameter>
+        <cd:parameter name="before">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="inbetween">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+        <cd:parameter name="align">
+          <cd:resolve name="align"/>
+        </cd:parameter>
+        <cd:parameter name="after">
+          <cd:constant type="cd:command"/>
+        </cd:parameter>
+      </cd:assignments>
+    </cd:arguments>
+  </cd:command>
+  
+
+
+</cd:interface>
